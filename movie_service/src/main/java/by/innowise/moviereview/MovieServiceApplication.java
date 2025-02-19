@@ -1,4 +1,4 @@
-package by.innowise.movie_service;
+package by.innowise.moviereview;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
