@@ -27,7 +27,6 @@ import java.util.Map;
 @RequestMapping("/images")
 @RequiredArgsConstructor
 public class ImageController {
-
     private final ImageService imageService;
 
     @ExceptionHandler(ImageNotFoundException.class)
@@ -48,14 +47,14 @@ public class ImageController {
 
     @GetMapping
     public ResponseEntity<Page<ImageDto>> getAllImages(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
         Page<ImageDto> images = imageService.getAllImages(page, size);
         return ResponseEntity.ok(images);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<byte[]> downloadImage(@PathVariable String id) throws IOException {
+    public ResponseEntity<byte[]> downloadImage(@PathVariable("id") String id) throws IOException {
         GridFsResource resource = imageService.getImageResource(id);
         byte[] imageData = imageService.createImage(resource);
         HttpHeaders headers = new HttpHeaders();
@@ -65,5 +64,3 @@ public class ImageController {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 }
-
-

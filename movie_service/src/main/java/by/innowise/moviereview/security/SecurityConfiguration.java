@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/**", "/api/register").permitAll()
                         .requestMatchers("/api/admin/reviews/**").hasAuthority(ADMIN_AUTHORITY)
                         .requestMatchers("/api/admin/users/**").hasAuthority(ADMIN_AUTHORITY)
                         .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
