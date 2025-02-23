@@ -36,6 +36,7 @@ public class ImageServiceImpl implements ImageService {
     );
     private final GridFsTemplate gridFsTemplate;
     private final ImageMapper imageMapper;
+    private final ImageEventProducer imageEventProducer;
 
     @Override
     public ImageDto saveImage(MultipartFile file) throws IOException {
@@ -50,6 +51,7 @@ public class ImageServiceImpl implements ImageService {
                 .uploadDate(new Date())
                 .size(file.getSize())
                 .build();
+        imageEventProducer.sendImageSavedEvent(imageMetadata.getFileName());
         return imageMapper.toDto(imageMetadata);
     }
 

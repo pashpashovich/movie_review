@@ -63,9 +63,8 @@ public class Movie {
     @Column(nullable = false, length = 50)
     private String language;
 
-    @Lob
     @Column(name = "poster", columnDefinition = "TEXT")
-    private String posterBase64;
+    private String poster;
 
     @Column(name = "avg_rating", precision = 3, scale = 2)
     private BigDecimal avgRating;

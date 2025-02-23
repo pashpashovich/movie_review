@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/api/images")
 @RequiredArgsConstructor
 public class ImageController {
     private final ImageService imageService;
@@ -40,9 +40,9 @@ public class ImageController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ImageDto> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         ImageDto imageDto = imageService.saveImage(file);
-        return ResponseEntity.ok(imageDto);
+        return ResponseEntity.ok(imageDto.getId());
     }
 
     @GetMapping

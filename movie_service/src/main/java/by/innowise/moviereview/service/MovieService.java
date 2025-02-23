@@ -1,5 +1,6 @@
 package by.innowise.moviereview.service;
 
+import by.innowise.moviereview.client.ImageServiceClient;
 import by.innowise.moviereview.dto.MovieCreateDto;
 import by.innowise.moviereview.dto.MovieDto;
 import by.innowise.moviereview.dto.MovieFilterRequest;
@@ -13,13 +14,13 @@ import by.innowise.moviereview.repository.GenreRepository;
 import by.innowise.moviereview.repository.MovieRepository;
 import by.innowise.moviereview.repository.PersonRepository;
 import by.innowise.moviereview.util.MovieSpecifications;
-import by.innowise.moviereview.util.PosterLoading;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,7 @@ public class MovieService {
     private final GenreRepository genreRepository;
     private final PersonRepository personRepository;
     private final MovieMapper movieMapper;
+    private final ImageServiceClient imageServiceClient;
 
     public List<MovieDto> getMoviesWithPagination(int page, int pageSize) {
         return movieRepository.findAll(PageRequest.of(page - 1, pageSize))
@@ -89,11 +91,12 @@ public class MovieService {
         Movie existingMovie = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Фильм с ID " + id + " не найден."));
         if (posterFile != null) {
-            String posterBase64 = PosterLoading.processPosterFile(posterFile);
-            existingMovie.setPosterBase64(posterBase64);
+            ResponseEntity<String> stringResponseEntity = imageServiceClient.uploadImage(posterFile);
+            String name = stringResponseEntity.getBody();
+            existingMovie.setPoster(name);
+            Movie savedMovie = movieRepository.save(existingMovie);
+            log.info("Movie avatar with ID {} has been changed", savedMovie.getId());
         }
-        Movie savedMovie = movieRepository.save(existingMovie);
-        log.info("Movie avatar with ID {} has been changed", savedMovie.getId());
     }
 
 

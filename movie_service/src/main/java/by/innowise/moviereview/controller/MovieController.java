@@ -63,8 +63,7 @@ public class MovieController {
     @PostMapping(value = "/{id}/poster", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadMoviePoster(
             @PathVariable @NotNull Long id,
-            @RequestPart("posterFile") @NotNull MultipartFile posterFile) throws IOException, EntityNotFoundException {
-
+            @RequestPart("posterFile") @NotNull MultipartFile posterFile) throws EntityNotFoundException, IOException {
         movieService.updateMoviePoster(id, posterFile);
         return ResponseEntity.ok().build();
     }
