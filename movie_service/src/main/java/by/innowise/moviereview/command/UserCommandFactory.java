@@ -1,7 +1,7 @@
 package by.innowise.moviereview.command;
 
 import by.innowise.moviereview.dto.UserDto;
-import by.innowise.moviereview.service.AdminUserService;
+import by.innowise.moviereview.service.impl.AdminUserServiceImpl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class UserCommandFactory {
     private final BlockUserCommand blockUserCommand;
     private final UnblockUserCommand unblockUserCommand;
     private final PromoteUserCommand promoteUserCommand;
-    private final AdminUserService adminUserService;
+    private final AdminUserServiceImpl adminUserService;
 
     private Map<String, UserCommand> commands;
 

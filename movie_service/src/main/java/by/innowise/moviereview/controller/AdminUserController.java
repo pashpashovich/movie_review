@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/admin/users")
@@ -27,20 +28,21 @@ public class AdminUserController {
         return ResponseEntity.ok(userCommandFactory.getAllUsers());
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> handleUserAction(@PathVariable @NotNull Long userId) {
-        userCommandFactory.getCommand("delete").execute(userId);
-        return ResponseEntity.ok(String.format("User with id %s deleted successfully", userId));
-    }
-
     @PatchMapping("/{userId}")
-    public ResponseEntity<String> handleUserAction(@PathVariable @NotNull Long userId,
-                                                   @RequestParam @NotNull String action) {
+    public ResponseEntity<Map<String, String>> handleUserAction(@PathVariable @NotNull Long userId,
+                                                                @RequestParam @NotNull String action) {
         var command = userCommandFactory.getCommand(action);
         if (command == null) {
-            return ResponseEntity.badRequest().body("Unknown action: " + action);
+            return ResponseEntity.badRequest().body(Map.of("message", "Unknown action: " + action));
         }
         command.execute(userId);
-        return ResponseEntity.ok("User " + action + " successfully");
+        return ResponseEntity.ok(Map.of("message", "User " + action + " successfully"));
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Map<String, String>> handleUserAction(@PathVariable @NotNull Long userId) {
+        userCommandFactory.getCommand("delete").execute(userId);
+        return ResponseEntity.ok(Map.of("message", String.format("User with id %s deleted successfully", userId)));
+    }
+
 }

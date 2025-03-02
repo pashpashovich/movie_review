@@ -23,7 +23,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>, JpaSpecific
     @Query("SELECT DISTINCT m FROM Movie m JOIN m.genres g WHERE g.id IN :genreIds")
     List<Movie> findByGenres(@Param("genreIds") List<Long> genreIds);
 
-    @Query(value = "SELECT m FROM Movie m LEFT JOIN m.ratings r GROUP BY m.id ORDER BY COALESCE(AVG(r.rating), 0) DESC")
+    @Query(value = "SELECT m FROM Movie m LEFT JOIN m.ratings r GROUP BY m.id ORDER BY COALESCE(AVG(r.rating), 0) DESC LIMIT 5")
     List<Movie> findTopRatedMovies();
 
 }

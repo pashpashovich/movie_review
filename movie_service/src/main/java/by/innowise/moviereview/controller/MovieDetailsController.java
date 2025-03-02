@@ -35,6 +35,7 @@ public class MovieDetailsController {
     @GetMapping("/movie/{movieId}")
     public ResponseEntity<MovieDetailsDto> getMovieDetails(@PathVariable("movieId") @NotNull Long movieId,
                                                            @RequestParam("userId") @NotNull Long userId) throws EntityNotFoundException {
-        return ResponseEntity.ok(movieDetailsFacade.getMovieDetails(movieId, userId));
+        MovieDetailsDto movieDetails = movieDetailsFacade.getMovieDetails(movieId, userId);
+        return ResponseEntity.ok(movieDetails);
     }
 }

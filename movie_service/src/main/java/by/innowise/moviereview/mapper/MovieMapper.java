@@ -38,7 +38,7 @@ public interface MovieMapper {
     List<MovieDto> toListDtoForRecommendations(List<Movie> movie);
 
     @Mapping(target = "avgRating", ignore = true)
-    @Mapping(target = "posterBase64", ignore = true)
+    @Mapping(target = "poster", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "people", ignore = true)
     @Mapping(target = "genres", ignore = true)

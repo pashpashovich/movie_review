@@ -2,7 +2,7 @@ package by.innowise.moviereview.controller;
 
 import by.innowise.moviereview.dto.WatchlistDto;
 import by.innowise.moviereview.dto.WatchlistRequest;
-import by.innowise.moviereview.service.WatchlistService;
+import by.innowise.moviereview.service.interfaces.WatchlistService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,14 @@ public class WatchlistController {
     public ResponseEntity<List<WatchlistDto>> getWatchlist(@PathVariable("userId") @NotNull Long userId) {
         List<WatchlistDto> watchlist = watchlistService.getWatchlistByUserId(userId);
         return ResponseEntity.ok(watchlist);
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkMovieInWatchlist(
+            @RequestParam Long userId,
+            @RequestParam Long movieId) {
+        boolean movieInWatchlist = watchlistService.isMovieInWatchlist(userId, movieId);
+        return ResponseEntity.ok(movieInWatchlist);
     }
 
     @PostMapping("/add")

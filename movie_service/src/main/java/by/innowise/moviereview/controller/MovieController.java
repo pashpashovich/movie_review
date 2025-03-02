@@ -4,10 +4,11 @@ import by.innowise.moviereview.dto.ErrorResponseImpl;
 import by.innowise.moviereview.dto.MovieCreateDto;
 import by.innowise.moviereview.dto.MovieDto;
 import by.innowise.moviereview.exception.EntityNotFoundException;
-import by.innowise.moviereview.service.MovieService;
+import by.innowise.moviereview.service.interfaces.MovieService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin/movies")
@@ -44,15 +46,22 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieDto>> getMovies(
-            @RequestParam(value = "page", defaultValue = "1") @NotNull int page,
-            @RequestParam(value = "pageSize", defaultValue = "5") @NotNull int pageSize,
-            @RequestParam(value = "title", required = false) @NotNull String query) {
-        List<MovieDto> movies = (query == null)
+    public ResponseEntity<Map<String, Object>> getMovies(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
+            @RequestParam(value = "title", required = false) String query) {
+
+        Page<MovieDto> moviesPage = (query == null)
                 ? movieService.getMoviesWithPagination(page, pageSize)
                 : movieService.filterMoviesWithPagination(query, page, pageSize);
-        return ResponseEntity.ok(movies);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("movies", moviesPage.getContent()); // ✅ Теперь возвращает список фильмов
+        response.put("totalPages", moviesPage.getTotalPages()); // ✅ Количество страниц
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping
     public ResponseEntity<MovieDto> createMovie(@RequestBody MovieCreateDto movieDto) {

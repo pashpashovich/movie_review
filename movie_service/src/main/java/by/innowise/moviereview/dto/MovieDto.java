@@ -17,7 +17,7 @@ public class MovieDto {
     private Integer duration;
     private String language;
     private Double avgRating;
-    private String posterBase64;
+    private String poster;
     private Set<String> genres;
     private Set<String> actors;
     private Set<String> directors;

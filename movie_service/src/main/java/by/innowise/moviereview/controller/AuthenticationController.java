@@ -3,7 +3,7 @@ package by.innowise.moviereview.controller;
 import by.innowise.moviereview.dto.AuthenticationRequest;
 import by.innowise.moviereview.dto.AuthenticationResponse;
 import by.innowise.moviereview.dto.ErrorResponseImpl;
-import by.innowise.moviereview.service.AuthenticationService;
+import by.innowise.moviereview.service.interfaces.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

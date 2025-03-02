@@ -1,5 +1,4 @@
-package by.innowise.moviereview.service;
-
+package by.innowise.moviereview.service.impl;
 
 import by.innowise.moviereview.dto.AuthenticationRequest;
 import by.innowise.moviereview.dto.AuthenticationResponse;
@@ -7,6 +6,7 @@ import by.innowise.moviereview.entity.User;
 import by.innowise.moviereview.exception.NotFoundException;
 import by.innowise.moviereview.repository.UserRepository;
 import by.innowise.moviereview.security.JwtService;
+import by.innowise.moviereview.service.interfaces.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +18,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(

@@ -16,5 +16,6 @@ public class MovieDetailsDto {
     private List<ReviewDto> reviews;
     private boolean isInList;
     private Integer userRating;
+    private Long ratingId;
 }
 

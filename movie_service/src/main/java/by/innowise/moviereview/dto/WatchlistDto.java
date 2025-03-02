@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class WatchlistDto {
     private Long movieId;
     private String movieTitle;
-    private String posterBase64;
+    private String poster;
     private LocalDateTime addedAt;
 }

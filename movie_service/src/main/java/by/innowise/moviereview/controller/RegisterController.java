@@ -5,7 +5,7 @@ import by.innowise.moviereview.dto.UserCreateDto;
 import by.innowise.moviereview.dto.UserDto;
 import by.innowise.moviereview.exception.EmailNotAvailableException;
 import by.innowise.moviereview.exception.UserNotFoundException;
-import by.innowise.moviereview.service.UserService;
+import by.innowise.moviereview.service.interfaces.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

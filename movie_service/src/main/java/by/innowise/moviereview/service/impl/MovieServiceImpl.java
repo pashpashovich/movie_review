@@ -1,4 +1,4 @@
-package by.innowise.moviereview.service;
+package by.innowise.moviereview.service.impl;
 
 import by.innowise.moviereview.client.ImageServiceClient;
 import by.innowise.moviereview.dto.MovieCreateDto;
@@ -13,6 +13,7 @@ import by.innowise.moviereview.mapper.MovieMapper;
 import by.innowise.moviereview.repository.GenreRepository;
 import by.innowise.moviereview.repository.MovieRepository;
 import by.innowise.moviereview.repository.PersonRepository;
+import by.innowise.moviereview.service.interfaces.MovieService;
 import by.innowise.moviereview.util.MovieSpecifications;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +32,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MovieService {
+public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
@@ -40,18 +40,20 @@ public class MovieService {
     private final MovieMapper movieMapper;
     private final ImageServiceClient imageServiceClient;
 
-    public List<MovieDto> getMoviesWithPagination(int page, int pageSize) {
+    @Override
+    public Page<MovieDto> getMoviesWithPagination(int page, int pageSize) {
         return movieRepository.findAll(PageRequest.of(page - 1, pageSize))
-                .map(movieMapper::toDto)
-                .getContent();
+                .map(movieMapper::toDto);
     }
 
+    @Override
     public MovieDto getMovieById(Long id) throws EntityNotFoundException {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Фильм не найден с id: " + id));
         return movieMapper.toDto(movie);
     }
 
+    @Override
     @Transactional
     public MovieDto createMovie(MovieCreateDto movieDto) {
         Movie movie = movieMapper.toEntityFromDto(movieDto);
@@ -64,6 +66,7 @@ public class MovieService {
         return dto;
     }
 
+    @Override
     @Transactional
     public MovieDto updateMovie(Long id, MovieCreateDto movieDto) throws EntityNotFoundException {
         Movie existingMovie = movieRepository.findById(id)
@@ -82,12 +85,14 @@ public class MovieService {
         return movieMapper.toDto(savedMovie);
     }
 
+    @Override
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
         log.info("Movie with ID {} removed", id);
     }
 
-    public void updateMoviePoster(Long id, MultipartFile posterFile) throws EntityNotFoundException, IOException {
+    @Override
+    public void updateMoviePoster(Long id, MultipartFile posterFile) throws EntityNotFoundException {
         Movie existingMovie = movieRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Фильм с ID " + id + " не найден."));
         if (posterFile != null) {
@@ -99,24 +104,21 @@ public class MovieService {
         }
     }
 
-
-    public List<MovieDto> filterMoviesWithPagination(String searchQuery, int page, int size) {
+    @Override
+    public Page<MovieDto> filterMoviesWithPagination(String searchQuery, int page, int size) {
         Specification<Movie> specification = MovieSpecifications.withFilters(searchQuery);
         Page<Movie> moviePage = movieRepository.findAll(specification, PageRequest.of(page - 1, size));
-        return moviePage.getContent()
-                .stream()
-                .map(movieMapper::toDto)
-                .toList();
+        return moviePage
+                .map(movieMapper::toDto);
     }
 
+    @Override
     @Transactional
-    public List<MovieDto> filterMoviesWithPagination(MovieFilterRequest movieFilterRequest) {
+    public Page<MovieDto> filterMoviesWithPagination(MovieFilterRequest movieFilterRequest) {
         Specification<Movie> specification = MovieSpecifications.withFilters(movieFilterRequest.getSearchQuery(), movieFilterRequest.getGenreId(), movieFilterRequest.getLanguage(), movieFilterRequest.getYear(), movieFilterRequest.getDuration());
         Page<Movie> moviePage = movieRepository.findAll(specification, PageRequest.of(movieFilterRequest.getPage() - 1, movieFilterRequest.getSize()));
-        return moviePage.getContent()
-                .stream()
-                .map(movieMapper::toDto)
-                .toList();
+        return moviePage
+                .map(movieMapper::toDto);
     }
 
     private Set<Person> getPeopleByRoles(MovieCreateDto movieDto) {

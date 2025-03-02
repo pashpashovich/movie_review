@@ -6,7 +6,7 @@ import by.innowise.moviereview.dto.RatingDto;
 import by.innowise.moviereview.dto.RatingUpdateRequest;
 import by.innowise.moviereview.exception.EntityNotFoundException;
 import by.innowise.moviereview.exception.UserNotFoundException;
-import by.innowise.moviereview.service.RatingService;
+import by.innowise.moviereview.service.interfaces.RatingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

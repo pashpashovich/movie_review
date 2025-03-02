@@ -2,10 +2,10 @@ package by.innowise.moviereview.facade;
 
 import by.innowise.moviereview.dto.MovieDetailsDto;
 import by.innowise.moviereview.exception.EntityNotFoundException;
-import by.innowise.moviereview.service.MovieService;
-import by.innowise.moviereview.service.RatingService;
-import by.innowise.moviereview.service.ReviewService;
-import by.innowise.moviereview.service.WatchlistService;
+import by.innowise.moviereview.service.interfaces.MovieService;
+import by.innowise.moviereview.service.interfaces.RatingService;
+import by.innowise.moviereview.service.interfaces.ReviewService;
+import by.innowise.moviereview.service.interfaces.WatchlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +26,7 @@ public class MovieDetailsFacade {
                 .reviews(reviewService.findApprovedReviewsByMovieId(movieId))
                 .isInList(watchlistService.isMovieInWatchlist(userId, movieId))
                 .userRating(ratingService.getRatingByUserAndMovie(userId, movieId))
+                .ratingId(ratingService.getRatingIdByUserAndMovie(userId, movieId))
                 .build();
     }
 }

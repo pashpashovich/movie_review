@@ -2,7 +2,7 @@ package by.innowise.moviereview.controller;
 
 import by.innowise.moviereview.dto.ReviewDto;
 import by.innowise.moviereview.dto.ReviewRequest;
-import by.innowise.moviereview.service.ReviewService;
+import by.innowise.moviereview.service.interfaces.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

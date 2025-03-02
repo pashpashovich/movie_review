@@ -1,4 +1,4 @@
-package by.innowise.moviereview.service;
+package by.innowise.moviereview.service.impl;
 
 import by.innowise.moviereview.dto.ReviewDto;
 import by.innowise.moviereview.dto.ReviewRequest;
@@ -11,6 +11,7 @@ import by.innowise.moviereview.mapper.ReviewMapper;
 import by.innowise.moviereview.repository.MovieRepository;
 import by.innowise.moviereview.repository.ReviewRepository;
 import by.innowise.moviereview.repository.UserRepository;
+import by.innowise.moviereview.service.interfaces.ReviewService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ReviewService {
+public class ReviewServiceImpl implements ReviewService {
     private static final int LATEST_REVIEWS_DAYS = 5;
 
     private final ReviewRepository reviewRepository;
@@ -30,6 +31,7 @@ public class ReviewService {
     private final MovieRepository movieRepository;
     private final ReviewMapper reviewMapper;
 
+    @Override
     public ReviewDto addReview(ReviewRequest reviewRequest) {
         User user = userRepository.findById(reviewRequest.getUserId())
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
@@ -47,11 +49,13 @@ public class ReviewService {
         return reviewMapper.toDto(saved);
     }
 
+    @Override
     public List<ReviewDto> findAllPendingReviews() {
         List<Review> entities = reviewRepository.findByStatus(ReviewStatus.PENDING);
         return reviewMapper.toListDto(entities);
     }
 
+    @Override
     public ReviewDto updateReviewStatus(Long reviewId, String status) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NotFoundException("Рецензия не найдена."));
@@ -61,11 +65,13 @@ public class ReviewService {
         return reviewMapper.toDto(review);
     }
 
+    @Override
     public List<ReviewDto> findApprovedReviewsByMovieId(Long movieId) {
         List<Review> entities = reviewRepository.findByMovieIdAndStatus(movieId, ReviewStatus.APPROVED);
         return reviewMapper.toListDto(entities);
     }
 
+    @Override
     @Transactional
     public List<ReviewDto> findRecentReviewsByUserId(Long userId) {
         userRepository.findById(userId)

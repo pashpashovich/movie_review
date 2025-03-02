@@ -11,7 +11,7 @@ import java.util.List;
 public interface WatchlistMapper {
     @Mapping(target = "movieId", source = "movie.id")
     @Mapping(target = "movieTitle", source = "movie.title")
-    @Mapping(target = "posterBase64", source = "movie.posterBase64")
+    @Mapping(target = "poster", source = "movie.poster")
     @Mapping(target = "addedAt", source = "addedAt")
     WatchlistDto toDto(Watchlist watchlist);
 

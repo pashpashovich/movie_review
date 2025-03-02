@@ -24,9 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/images")
+@RequestMapping("api/images")
 @RequiredArgsConstructor
 public class ImageController {
+
     private final ImageService imageService;
 
     @ExceptionHandler(ImageNotFoundException.class)
@@ -47,8 +48,8 @@ public class ImageController {
 
     @GetMapping
     public ResponseEntity<Page<ImageDto>> getAllImages(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Page<ImageDto> images = imageService.getAllImages(page, size);
         return ResponseEntity.ok(images);
     }

@@ -4,7 +4,7 @@ import by.innowise.moviereview.dto.EntityCreateDto;
 import by.innowise.moviereview.dto.EntityDto;
 import by.innowise.moviereview.dto.ErrorResponseImpl;
 import by.innowise.moviereview.dto.GenreFilterDto;
-import by.innowise.moviereview.service.GenreService;
+import by.innowise.moviereview.service.interfaces.GenreService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -41,7 +41,7 @@ public class GenreController {
                 .body(new ErrorResponseImpl(ex.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now()));
     }
 
-    @GetMapping
+    @GetMapping("/filter")
     public ResponseEntity<Map<String, Object>> getGenres(@ModelAttribute @Valid GenreFilterDto filter) {
         List<String> allowedSortFields = List.of("id", "name");
         if (!allowedSortFields.contains(filter.getSort())) {
@@ -50,6 +50,12 @@ public class GenreController {
 
         Map<String, Object> result = genreService.getGenresWithFilters(filter);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<String>> getGenres() {
+        List<String> genres = genreService.getGenres();
+        return ResponseEntity.ok(genres);
     }
 
     @PostMapping

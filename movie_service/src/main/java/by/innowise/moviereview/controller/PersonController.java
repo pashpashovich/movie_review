@@ -3,7 +3,8 @@ package by.innowise.moviereview.controller;
 import by.innowise.moviereview.dto.PersonCreateDto;
 import by.innowise.moviereview.dto.PersonDto;
 import by.innowise.moviereview.dto.PersonFilter;
-import by.innowise.moviereview.service.PersonService;
+import by.innowise.moviereview.enums.MovieRole;
+import by.innowise.moviereview.service.interfaces.PersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/admin/people")
 @RequiredArgsConstructor
@@ -30,6 +33,24 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<Page<PersonDto>> getPeople(@ModelAttribute @Valid PersonFilter filter) {
         Page<PersonDto> peoplePage = personService.getPeopleWithFiltersAndPagination(filter);
+        return ResponseEntity.ok(peoplePage);
+    }
+
+    @GetMapping("/actors")
+    public ResponseEntity<List<PersonDto>> getActors() {
+        List<PersonDto> peoplePage = personService.getPeople(MovieRole.ACTOR);
+        return ResponseEntity.ok(peoplePage);
+    }
+
+    @GetMapping("/directors")
+    public ResponseEntity<List<PersonDto>> getDirectors() {
+        List<PersonDto> peoplePage = personService.getPeople(MovieRole.DIRECTOR);
+        return ResponseEntity.ok(peoplePage);
+    }
+
+    @GetMapping("/producers")
+    public ResponseEntity<List<PersonDto>> getProducers() {
+        List<PersonDto> peoplePage = personService.getPeople(MovieRole.PRODUCER);
         return ResponseEntity.ok(peoplePage);
     }
 

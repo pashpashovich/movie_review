@@ -1,4 +1,4 @@
-package by.innowise.moviereview.service;
+package by.innowise.moviereview.service.impl;
 
 import by.innowise.moviereview.dto.WatchlistDto;
 import by.innowise.moviereview.entity.Movie;
@@ -10,6 +10,7 @@ import by.innowise.moviereview.mapper.WatchlistMapper;
 import by.innowise.moviereview.repository.MovieRepository;
 import by.innowise.moviereview.repository.UserRepository;
 import by.innowise.moviereview.repository.WatchlistRepository;
+import by.innowise.moviereview.service.interfaces.WatchlistService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class WatchlistService {
+public class WatchlistServiceImpl implements WatchlistService {
 
     private final WatchlistRepository watchlistRepository;
     private final UserRepository userRepository;

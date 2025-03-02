@@ -1,4 +1,4 @@
-package by.innowise.moviereview.service;
+package by.innowise.moviereview.service.impl;
 
 import by.innowise.moviereview.dto.UserCreateDto;
 import by.innowise.moviereview.dto.UserDto;
@@ -8,6 +8,7 @@ import by.innowise.moviereview.exception.EmailNotAvailableException;
 import by.innowise.moviereview.exception.UserNotFoundException;
 import by.innowise.moviereview.mapper.UserMapper;
 import by.innowise.moviereview.repository.UserRepository;
+import by.innowise.moviereview.service.interfaces.UserService;
 import by.innowise.moviereview.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +17,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @Override
     public UserDto findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         return userMapper.toDto(user);
     }
 
+    @Override
     public UserDto register(UserCreateDto userCreateDto) {
         if (userRepository.findByUsername(userCreateDto.getUsername()).isPresent()) {
             throw new UserNotFoundException("Username already exists");
