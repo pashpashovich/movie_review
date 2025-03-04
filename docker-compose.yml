@@ -44,6 +44,7 @@ services:
     depends_on:
       - postgres_db
       - kafka
+      - admin_server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/moviedb
       SPRING_DATASOURCE_USERNAME: admin
@@ -54,14 +55,23 @@ services:
   image_service:
     build:
       context: .
-      dockerfile: image-service/Dockerfile
+      dockerfile: image_service/Dockerfile
     depends_on:
       - mongo_db
       - kafka
+      - admin_server
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo_db:27017/imagesdb
     ports:
       - "8081:8081"
+
+  admin_server:
+    build:
+      context: .
+      dockerfile: admin_server/Dockerfile
+    ports:
+      - "9090:9090"
+
 
 volumes:
   postgres_data:

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SonarLintProjectSettings">
+    <option name="moduleMapping">
+      <map>
+        <entry key="admin_server" value="admin-server" />
+        <entry key="image_service" value="image-service" />
+      </map>
+    </option>
+  </component>
+</project>

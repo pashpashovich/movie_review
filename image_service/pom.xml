@@ -9,11 +9,11 @@
     <parent>
         <groupId>by.innowise</groupId>
         <artifactId>movie_review</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>v</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>image-service</artifactId>
+    <artifactId>image_service</artifactId>
     <name>image-service</name>
     <description>Image Service module</description>
     <packaging>jar</packaging>
@@ -73,6 +73,12 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>3.1.8</version>
         </dependency>
     </dependencies>
 

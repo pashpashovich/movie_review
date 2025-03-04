@@ -5,14 +5,15 @@
 
     <groupId>by.innowise</groupId>
     <artifactId>movie_review</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>v</version>
     <packaging>pom</packaging>
     <name>movie_review</name>
     <description>Parent project for movie_service and image-service</description>
 
     <modules>
         <module>movie_service</module>
-        <module>image-service</module>
+        <module>image_service</module>
+        <module>admin_server</module>
     </modules>
 
     <properties>

@@ -9,7 +9,7 @@
     <parent>
         <groupId>by.innowise</groupId>
         <artifactId>movie_review</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>v</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -60,6 +60,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>3.4.4</version>
         </dependency>
 
         <dependency>
