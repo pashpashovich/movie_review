@@ -1,11 +1,9 @@
-version: "3.8"
-
 services:
   postgres_db:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_DB: moviedb
+      POSTGRES_DB: MOVIE_REVIEW
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -44,11 +42,11 @@ services:
     depends_on:
       - postgres_db
       - kafka
-      - admin_server
+      - admin-server
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/moviedb
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     ports:
       - "8080:8080"
 
@@ -59,13 +57,13 @@ services:
     depends_on:
       - mongo_db
       - kafka
-      - admin_server
+      - admin-server
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo_db:27017/imagesdb
     ports:
       - "8081:8081"
 
-  admin_server:
+  admin-server:
     build:
       context: .
       dockerfile: admin_server/Dockerfile
