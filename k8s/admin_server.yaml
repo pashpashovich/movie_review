@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: movie-service
+  name: admin-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: movie-service
+      app: admin-server
   template:
     metadata:
       labels:
-        app: movie-service
+        app: admin-server
     spec:
       containers:
-        - name: movie-service
-          image: movie_review-movie_service:latest
+        - name: admin-server
+          image: movie_review-admin-server:latest
           imagePullPolicy: Never
           ports:
-            - containerPort: 8080
+            - containerPort: 9090
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: movie-service
+  name: admin-server
 spec:
   selector:
-    app: movie-service
+    app: admin-server
   ports:
-    - port: 8080
+    - port: 9090

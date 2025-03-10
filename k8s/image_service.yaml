@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: review-service
+  name: image-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: review-service
+      app: image-service
   template:
     metadata:
       labels:
-        app: review-service
+        app: image-service
     spec:
       containers:
-        - name: review-service
-          image: review_service_image
+        - name: image-service
+          image: movie_review-image_service:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8081
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://mongodb:27017/IMAGE_SERVICE
-
+              value: mongodb://mongo-db:27017/imagesdb
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: review-service
+  name: image-service
 spec:
+  selector:
+    app: image-service
   ports:
     - port: 8081
-  selector:
-    app: review-service
