@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 
 @RestController
-@RequestMapping("api/register")
+@RequestMapping("api/v1/register")
 @RequiredArgsConstructor
 public class RegisterController {
 

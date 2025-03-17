@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("api/user/movies/rate")
+@RequestMapping("api/v1/user/movies/rate")
 @RequiredArgsConstructor
 public class MovieRatingController {
     private final RatingService ratingService;

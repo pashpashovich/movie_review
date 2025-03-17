@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
                 version = "1.0.0",
                 description = "Документация API для микросервиса изображений"
         ),
-        servers = @Server(url = "http://localhost:8081")
+        servers = @Server(url = "/")
 )
 public class OpenApiConfig {
 }

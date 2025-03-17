@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/user/watchlist")
+@RequestMapping("api/v1/user/watchlist")
 @RequiredArgsConstructor
 public class WatchlistController {
 

@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
                 version = "1.0.0",
                 description = "Документация API для сервиса рецензирования фильмов"
         ),
-        servers = @Server(url = "http://localhost:8080"),
+        servers = @Server(url = "/"),
         security = @SecurityRequirement(name = "JWT")
 )
 @SecurityScheme(

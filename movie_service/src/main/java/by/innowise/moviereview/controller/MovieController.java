@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/admin/movies")
+@RequestMapping("/api/v1/admin/movies")
 @RequiredArgsConstructor
 public class MovieController {
 

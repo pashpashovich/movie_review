@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/admin/genres")
+@RequestMapping("api/v1/admin/genres")
 @RequiredArgsConstructor
 public class GenreController {
 

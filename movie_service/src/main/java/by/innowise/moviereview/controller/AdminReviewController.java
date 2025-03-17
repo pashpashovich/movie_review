@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/admin/reviews")
+@RequestMapping("api/v1/admin/reviews")
 @RequiredArgsConstructor
 public class AdminReviewController {
 

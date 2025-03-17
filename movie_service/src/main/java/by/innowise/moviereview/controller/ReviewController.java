@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("api/user/movies")
+@RequestMapping("api/v1/user/movies")
 @RequiredArgsConstructor
 public class ReviewController {
 

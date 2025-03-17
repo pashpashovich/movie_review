@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("api/user/movies")
+@RequestMapping("api/v1/user/movies")
 @RequiredArgsConstructor
 public class MovieDetailsController {
 

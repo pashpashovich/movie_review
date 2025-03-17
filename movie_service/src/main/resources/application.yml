@@ -13,7 +13,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://admin-server:9090
+        url: http://movie.local/api/admin
         username: admin
         password: admin
 
@@ -54,5 +54,5 @@ management:
 
 image:
   service:
-    url: http://localhost:8081
+    url: http://movie.local/api/images
 

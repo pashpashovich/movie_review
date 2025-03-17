@@ -22,7 +22,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/user/profile")
+@RequestMapping("api/v1/user/profile")
 @RequiredArgsConstructor
 public class UserProfileController {
 
